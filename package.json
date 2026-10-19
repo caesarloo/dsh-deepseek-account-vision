@@ -19,6 +19,14 @@
     "name": "Caesar Loo",
     "email": "qizhen.lu@hotmail.com"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caesarloo/dsh-deepseek-account-vision.git"
+  },
+  "homepage": "https://github.com/caesarloo/dsh-deepseek-account-vision#readme",
+  "bugs": {
+    "url": "https://github.com/caesarloo/dsh-deepseek-account-vision/issues"
+  },
   "publishConfig": {
     "access": "public"
   },
