@@ -41,15 +41,14 @@ test('deepseek_vision：同图同提示词命中缓存，不重复识图', async
     assert.equal(fake.llmRequests.length, 1);
 });
 
-test('deepseek_vision：自定义 prompt 会进入识图请求', async () => {
+test('deepseek_vision：自定义 prompt 原样进入识图请求（不追加额外指令）', async () => {
     const { fake, tool } = setupTool();
     await tool.execute({ image_path: 'C:/img/a.png', prompt: '只识别图中的文字' }, EXEC);
     const text = fake.llmRequests[0].messages[0].content
         .filter((block) => block.type === 'text')
         .map((block) => block.text)
         .join('\n');
-    assert.match(text, /只识别图中的文字/);
-    assert.match(text, /优先回答上面的问题/);
+    assert.equal(text, '只识别图中的文字');
 });
 
 test('deepseek_vision：支持 http(s) 图片 URL', async () => {

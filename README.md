@@ -43,7 +43,7 @@ or, for a remote image:
 { "image_url": "https://example.com/chart.png" }
 ```
 
-The tool returns `{ text, model, source, truncated }`. The image never enters the main model's context — only the transcription does.
+The tool returns `{ text, model, source, truncated }`. The image never enters the main model's context — only the transcription does. A custom `prompt` is passed to the vision model verbatim; leave it out to use the built-in full-transcription prompt.
 
 **2. Automatic transcription route — paste images into a text-only chat**
 
@@ -147,7 +147,7 @@ dsh plugin --profile <profile> add <项目目录>
 { "image_url": "https://example.com/chart.png" }
 ```
 
-返回 `{ text, model, source, truncated }`。图片本身不会进入主模型上下文，只有转译文字会。
+返回 `{ text, model, source, truncated }`。图片本身不会进入主模型上下文，只有转译文字会。自定义 `prompt` 会原样交给识图模型；留空才使用内置的完整转译提示词。
 
 **2. 自动转译路由——给纯文本模型直接贴图**
 
