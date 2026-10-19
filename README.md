@@ -1,4 +1,4 @@
-# @caesarloo/dsh-deepseek-vision
+# @caesarloo/dsh-deepseek-account-vision
 
 [English](#english) | [中文](#中文)
 
@@ -19,7 +19,7 @@ Give **any** main model in DeepSeek Harness the vision of the DeepSeek account: 
 ### Install
 
 ```sh
-dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-vision
+dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-account-vision
 ```
 
 From a local checkout, install by directory instead: `dsh plugin --profile <profile> add <project-directory>`.
@@ -139,7 +139,7 @@ MIT
 ### 安装
 
 ```sh
-dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-vision
+dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-account-vision
 ```
 
 本地检出目录安装：`dsh plugin --profile <profile> add <项目目录>`。

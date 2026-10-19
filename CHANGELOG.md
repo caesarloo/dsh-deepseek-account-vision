@@ -4,7 +4,7 @@
 
 ## 0.1.0 — 2026-10-19
 
-首个版本。npm 包名为 `@caesarloo/dsh-deepseek-vision`
+首个版本。npm 包名为 `@caesarloo/dsh-deepseek-account-vision`
 （不带 scope 的 `dsh-deepseek-vision` 已被他人占用，不能再用）。
 
 ### 新增
