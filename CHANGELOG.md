@@ -12,7 +12,7 @@
   DeepSeek-V4.1-Flash（`deepseek-flash`，1017 版）识别图片——支持本地
   PNG/JPEG/WebP/GIF 路径与 `http(s)` 图片 URL，可选 `prompt` 指定识别重点。
 - **自动转译路由**：为每个已注册 provider 包一层 `<provider>-vision` 路由
-  （默认显示名 `<provider 名称> + DeepSeek 识图`），在 GUI 里给纯文本主模型贴图时，
+  （默认显示名 `<provider 名称> + 自动识图`），在 GUI 里给纯文本主模型贴图时，
   图片先由 DeepSeek-V4.1-Flash 转成文字，再交给原模型作答。
   - `wrapAllProviders`（默认开）覆盖已注册与之后动态注册的 provider；
     `innerProviders` 可改为只包裹指定 provider。

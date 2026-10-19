@@ -47,7 +47,7 @@ The tool returns `{ text, model, source, truncated }`. The image never enters th
 
 **2. Automatic transcription route — paste images into a text-only chat**
 
-Pick the route named **`<provider> + DeepSeek 识图`** (id `<provider>-vision`, configurable) in the model selector, then attach an image as usual. The image block is transcribed before the original adapter sees the request:
+Pick the route named **`<provider> + 自动识图`** (id `<provider>-vision`, configurable) in the model selector, then attach an image as usual. The image block is transcribed before the original adapter sees the request:
 
 ```
 GUI image ──▶ <provider>-vision route (declares image input → attachment admitted)
@@ -80,7 +80,7 @@ Defaults ship in `cordis.patch.yml`; override them in your profile's `cordis.pat
 | `wrapAllProviders` | `true` | Wrap every registered provider (including ones registered later) |
 | `innerProviders` | `[]` | Providers to wrap when `wrapAllProviders=false` |
 | `routeSuffix` | `-vision` | Route id suffix: `<provider><routeSuffix>` |
-| `routeNameTemplate` | `{name} + DeepSeek 识图` | Route display name; `{name}` / `{provider}` are substituted |
+| `routeNameTemplate` | `{name} + 自动识图` | Route display name; `{name}` / `{provider}` are substituted |
 | `marker` | `[图片转译]` | Prefix added to each transcription |
 | `failureMode` | `placeholder` | `placeholder` keeps the turn alive; `error` fails the whole turn |
 | `transcribePrompt` | `''` | Override the automatic-transcription prompt (empty = built-in) |
@@ -151,7 +151,7 @@ dsh plugin --profile <profile> add <项目目录>
 
 **2. 自动转译路由——给纯文本模型直接贴图**
 
-在模型选择器里选 **`<provider> + DeepSeek 识图`**（id 为 `<provider>-vision`，可配置），然后照常附加图片。图片块会在原适配器收到请求之前被转译：
+在模型选择器里选 **`<provider> + 自动识图`**（id 为 `<provider>-vision`，可配置），然后照常附加图片。图片块会在原适配器收到请求之前被转译：
 
 ```
 GUI 图片 ──▶ <provider>-vision 路由（声明支持图片 → 附件放行）
@@ -184,7 +184,7 @@ GUI 图片 ──▶ <provider>-vision 路由（声明支持图片 → 附件放
 | `wrapAllProviders` | `true` | 包裹全部已注册 provider（含之后动态注册的） |
 | `innerProviders` | `[]` | `wrapAllProviders=false` 时要包裹的 provider |
 | `routeSuffix` | `-vision` | 路由 id 后缀：`<provider><routeSuffix>` |
-| `routeNameTemplate` | `{name} + DeepSeek 识图` | 路由显示名；`{name}` / `{provider}` 会被替换 |
+| `routeNameTemplate` | `{name} + 自动识图` | 路由显示名；`{name}` / `{provider}` 会被替换 |
 | `marker` | `[图片转译]` | 每条转译文本的前缀 |
 | `failureMode` | `placeholder` | `placeholder` 保住本轮对话；`error` 让整轮失败 |
 | `transcribePrompt` | `''` | 覆盖自动转译提示词（留空用内置） |

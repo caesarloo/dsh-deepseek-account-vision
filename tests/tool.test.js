@@ -100,7 +100,7 @@ test('插件装配：默认注册 deepseek_vision 工具与 deepseek-account-vis
     const adapter = fake.registeredAdapters.get('deepseek-account-vision');
     const info = await adapter.resolveModel('deepseek-account-vision', 'deepseek-v4-pro');
     assert.deepEqual(info.inputModalities, ['text', 'image']);
-    assert.match(adapter.providerInfo('deepseek-account-vision').name, /DeepSeek 识图/);
+    assert.match(adapter.providerInfo('deepseek-account-vision').name, /自动识图/);
 });
 
 test('插件装配：完全关闭时不注册任何东西', async () => {

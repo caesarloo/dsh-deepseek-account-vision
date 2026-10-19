@@ -30,7 +30,7 @@
         wrapAllProviders: true
         innerProviders: []          # wrapAllProviders=false 时只包裹这些 provider
         routeSuffix: '-vision'
-        routeNameTemplate: '{name} + DeepSeek 识图'
+        routeNameTemplate: '{name} + 自动识图'
         marker: '[图片转译]'
         failureMode: placeholder    # placeholder | error
         transcribePrompt: ''        # 留空用内置提示词
