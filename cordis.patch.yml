@@ -1,0 +1,40 @@
+# dsh-deepseek-vision bundle patch：在 profile 树上插入一行插件。
+# 只有当本包作为 profile 依赖被安装（例如 `dsh plugin add dsh-deepseek-vision`）时，
+# 这一行才会被组合进运行时。
+#
+# 默认策略：
+# - 注册 deepseek_vision 工具：主模型是任意模型时都能调用它，用 DeepSeek 账号的
+#   DeepSeek-V4.1-Flash（deepseek-flash）识别本地图片路径或 http(s) 图片链接。
+# - autoTranscribe: 为所有已注册的模型提供方各包一层“识图路由”
+#   （<provider>-vision），把附带的图片自动转译成文字后再交给原模型。
+#   这样在 GUI 里给任意纯文本主模型贴图也能用。
+# - 所有识图请求都走 DeepSeek 账号登录态（ctx.llm 的 deepseek-account 路由），
+#   不需要任何 API Key。
+
+- insert:
+    - id: dsh-deepseek-vision
+      name: 'dsh-deepseek-vision'
+      config:
+        # 识图后端（默认：DeepSeek 账号自带的 DeepSeek-V4.1-Flash）
+        visionProvider: deepseek-account
+        visionModel: deepseek-flash
+        visionMaxTokens: 4096
+        timeoutMs: 120000
+
+        # deepseek_vision 工具
+        tool: true
+        toolName: deepseek_vision
+
+        # 自动转译路由
+        autoTranscribe: true
+        wrapAllProviders: true
+        innerProviders: []          # wrapAllProviders=false 时只包裹这些 provider
+        routeSuffix: '-vision'
+        routeNameTemplate: '{name} + DeepSeek 识图'
+        marker: '[图片转译]'
+        failureMode: placeholder    # placeholder | error
+        transcribePrompt: ''        # 留空用内置提示词
+        recognitionPrompt: ''       # 留空用内置提示词
+
+        cacheSize: 200
+        urlTimeoutMs: 30000
