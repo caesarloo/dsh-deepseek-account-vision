@@ -1,28 +1,33 @@
 {
-  "name": "dsh-deepseek-vision",
+  "name": "@caesarloo/dsh-deepseek-vision",
   "version": "0.1.0",
-  "description": "Give any main model DeepSeek-account vision: recognize images with DeepSeek-V4.1-Flash (deepseek-flash, 1017) through a deepseek_vision tool, and optionally auto-transcribe attached images for any text-only provider route.",
+  "description": "Give any main model DeepSeek-account vision in DeepSeek Harness: recognize images with DeepSeek-V4.1-Flash (deepseek-flash, 1017) through a deepseek_vision tool, and auto-transcribe attached images for any provider route. No API key.",
   "private": false,
   "type": "module",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
   "files": [
     "lib",
     "cordis.patch.yml",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md",
-    "scripts"
+    "CHANGELOG.md"
   ],
   "license": "MIT",
   "author": {
     "name": "Caesar Loo",
     "email": "qizhen.lu@hotmail.com"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "engines": {
     "node": ">=22.19.0",
     "dsh": ">=0.2.1-rc.2"
   },
   "dsh": {
+    "manifestVersion": 1,
     "bundle": {
       "patch": "./cordis.patch.yml"
     }
@@ -45,7 +50,10 @@
     "deepseek-account"
   ],
   "scripts": {
-    "test": "node --test \"tests/**/*.test.js\"",
-    "check": "node scripts/check-no-bom.js"
+    "test": "node --test \"tests/**/*.test.js\" && npm run check",
+    "test:unit": "node --test \"tests/**/*.test.js\"",
+    "check": "node scripts/check-no-bom.js && node scripts/check-leaks.mjs && node scripts/check-manifest.mjs",
+    "check-leaks": "node scripts/check-leaks.mjs",
+    "prepublishOnly": "npm test"
   }
 }

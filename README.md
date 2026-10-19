@@ -1,4 +1,4 @@
-# dsh-deepseek-vision
+# @caesarloo/dsh-deepseek-vision
 
 [English](#english) | [中文](#中文)
 
@@ -19,8 +19,10 @@ Give **any** main model in DeepSeek Harness the vision of the DeepSeek account: 
 ### Install
 
 ```sh
-dsh plugin --profile <profile> add <project-directory>
+dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-vision
 ```
+
+From a local checkout, install by directory instead: `dsh plugin --profile <profile> add <project-directory>`.
 
 Restart DSH once (bundle layers have no hot reload), then verify that `deepseek_vision` appears in the tool list of a new session. A patch-layer development install (`- insert:` with the plugin entry file) reloads hot without a restart.
 
@@ -102,6 +104,20 @@ Defaults ship in `cordis.patch.yml`; override them in your profile's `cordis.pat
 - Transcription is a lossy summary for dense screenshots: very small text or fine UI details may be missed. Use a stronger `visionModel` or a more explicit `prompt` when exactness matters.
 - Images are sent to DeepSeek with the recognition request (that is the point) and are not otherwise persisted by the plugin; the result cache lives in process memory only.
 
+### Development
+
+```sh
+pnpm install
+npm test                 # unit tests + BOM + fingerprint/credential + bundle-manifest checks
+npm run check-leaks      # fingerprint scan only
+```
+
+`prepublishOnly` runs `npm test`, so a package with a failing test, a BOM-prefixed source file, or a machine-specific fingerprint cannot be published. Publish explicitly against the official registry:
+
+```sh
+npm publish --registry https://registry.npmjs.org/
+```
+
 ### License
 
 MIT
@@ -123,8 +139,10 @@ MIT
 ### 安装
 
 ```sh
-dsh plugin --profile <profile> add <项目目录>
+dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-vision
 ```
+
+本地检出目录安装：`dsh plugin --profile <profile> add <项目目录>`。
 
 安装后重启一次 DSH（bundle 层不支持热重载），再在新会话的工具列表里确认出现 `deepseek_vision`。开发期也可以用 patch 层 `- insert:` 指向插件入口文件装载，改完热生效、无需重启。
 
@@ -205,6 +223,20 @@ GUI 图片 ──▶ <provider>-vision 路由（声明支持图片 → 附件放
 - 只接受 **PNG / JPEG / WebP / GIF**，不支持 PDF、音频、视频。
 - 转译对密集截图是有损摘要：极小的字或精细 UI 细节可能丢失；要求精确时换更强的 `visionModel` 或把 `prompt` 写具体。
 - 图片只随识图请求发送到 DeepSeek（这正是功能本身），插件不另行持久化；结果缓存只在进程内存中。
+
+### 开发与发布
+
+```sh
+pnpm install
+npm test                 # 单测 + BOM + 本机指纹/凭据 + bundle 清单一致性检查
+npm run check-leaks      # 只跑指纹扫描
+```
+
+`prepublishOnly` 跑 `npm test`：单测失败、源码带 BOM、或命中本机指纹/凭据时都发不出去。发布时显式指定官方 registry：
+
+```sh
+npm publish --registry https://registry.npmjs.org/
+```
 
 ### License
 

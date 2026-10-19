@@ -1,6 +1,6 @@
-# dsh-deepseek-vision bundle patch：在 profile 树上插入一行插件。
-# 只有当本包作为 profile 依赖被安装（例如 `dsh plugin add dsh-deepseek-vision`）时，
-# 这一行才会被组合进运行时。
+# @caesarloo/dsh-deepseek-vision bundle patch：在 profile 树上插入一行插件。
+# 只有当本包作为 profile 依赖被安装（例如
+# `dsh plugin add @caesarloo/dsh-deepseek-vision`）时，这一行才会被组合进运行时。
 #
 # 默认策略：
 # - 注册 deepseek_vision 工具：主模型是任意模型时都能调用它，用 DeepSeek 账号的
@@ -13,7 +13,7 @@
 
 - insert:
     - id: dsh-deepseek-vision
-      name: 'dsh-deepseek-vision'
+      name: '@caesarloo/dsh-deepseek-vision'
       config:
         # 识图后端（默认：DeepSeek 账号自带的 DeepSeek-V4.1-Flash）
         visionProvider: deepseek-account

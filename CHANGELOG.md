@@ -4,7 +4,8 @@
 
 ## 0.1.0 — 2026-10-19
 
-首个版本。
+首个版本。npm 包名为 `@caesarloo/dsh-deepseek-vision`
+（不带 scope 的 `dsh-deepseek-vision` 已被他人占用，不能再用）。
 
 ### 新增
 
@@ -22,4 +23,7 @@
   （默认 `deepseek-account`），复用 DSH 的 DeepSeek 登录态，插件不保存凭据。
 - **稳定与省费**：按图片内容 SHA-256 的进程内缓存、同键并发合并、
   失败图片 60 秒冷却、请求超时快速失败。
-- 29 项离线单元测试；中英双语 README；UTF-8 BOM 检查脚本。
+- **发布闸门**：`prepublishOnly` 先跑离线单测 + UTF-8 BOM 检查 + 本机指纹/凭据扫描
+  （`scripts/check-leaks.mjs`，规则自足、含路径写法变体；`.leak-patterns.local` 不进库）
+  + bundle 清单一致性检查（入口 / patch 随包 / insert name / engines.dsh）；
+  中英双语 README 通过结构与指纹审核。
