@@ -12,7 +12,7 @@
 #   不需要任何 API Key。
 
 - insert:
-    - id: dsh-deepseek-vision
+    - id: dsh-deepseek-account-vision
       name: '@caesarloo/dsh-deepseek-account-vision'
       config:
         # 识图后端（默认：DeepSeek 账号自带的 DeepSeek-V4.1-Flash）

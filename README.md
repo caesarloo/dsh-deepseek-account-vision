@@ -68,7 +68,7 @@ Transcribed text is prefixed with `[图片转译]`. When transcription fails and
 
 ### Configuration
 
-Defaults ship in `cordis.patch.yml`; override them in your profile's `cordis.patch.yml` with an `- id: dsh-deepseek-vision` entry. Unlisted keys fall back to the defaults below.
+Defaults ship in `cordis.patch.yml`; override them in your profile's `cordis.patch.yml` with an `- id: dsh-deepseek-account-vision` entry. Unlisted keys fall back to the defaults below.
 
 | Key | Default | Meaning |
 |---|---|---|
@@ -188,7 +188,7 @@ GUI 图片 ──▶ <provider>-vision 路由（声明支持图片 → 附件放
 
 ### 配置
 
-默认值随 `cordis.patch.yml` 提供；在 profile 的 `cordis.patch.yml` 里用 `- id: dsh-deepseek-vision` 条目覆盖。未列出的键回落到下表默认值。
+默认值随 `cordis.patch.yml` 提供；在 profile 的 `cordis.patch.yml` 里用 `- id: dsh-deepseek-account-vision` 条目覆盖。未列出的键回落到下表默认值。
 
 | 键 | 缺省 | 含义 |
 |---|---|---|
