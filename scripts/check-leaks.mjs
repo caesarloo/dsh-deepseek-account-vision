@@ -101,9 +101,18 @@ console.log(
     + TARGETS.filter((target) => existsSync(join(repoRoot, target))).join(', '),
 );
 
+/** 公开包元数据里的作者联系方式是发布者**有意公开**的信息（仓库与 npm 页面本就展示，
+ *  邮箱不按本机指纹处置），所以扫描 package.json 前先去掉 author 字段。 */
+function withoutPublicAuthorField(file, text) {
+    if (!file.endsWith('package.json')) return text;
+    return text
+        .replace(/"author"\s*:\s*\{[\s\S]*?\}\s*,?/g, '')
+        .replace(/"author"\s*:\s*"[^"]*"\s*,?/g, '');
+}
+
 let hits = 0;
 for (const file of files) {
-    const text = readFileSync(file, 'utf8');
+    const text = withoutPublicAuthorField(file, readFileSync(file, 'utf8'));
     for (const rule of rules) {
         const matches = text.match(new RegExp(rule.re.source, 'g'));
         if (!matches) continue;

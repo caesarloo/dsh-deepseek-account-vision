@@ -26,7 +26,7 @@ From a local checkout, install by directory instead: `dsh plugin --profile <prof
 
 Restart DSH once (bundle layers have no hot reload), then verify that `deepseek_vision` appears in the tool list of a new session. A patch-layer development install (`- insert:` with the plugin entry file) reloads hot without a restart.
 
-Requirements: DSH `>= 0.2.1-rc.2`, a signed-in DeepSeek account, and the standard `llm` / `attachments` / `fs` services (all present in the shipped bundle).
+Requirements: DSH `>= 0.2.1-rc.2 < 0.3.0` (verified on **0.2.1-rc.3**, 2026-10-24), a signed-in DeepSeek account, and the standard `llm` / `attachments` / `fs` services (all present in the shipped bundle). If you must run an out-of-range host, use the plugin manager's **exact-version exemption** (the profile's `compatibility.json`) instead of editing this range.
 
 ### Usage
 
@@ -146,7 +146,7 @@ dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-account-vision
 
 安装后重启一次 DSH（bundle 层不支持热重载），再在新会话的工具列表里确认出现 `deepseek_vision`。开发期也可以用 patch 层 `- insert:` 指向插件入口文件装载，改完热生效、无需重启。
 
-依赖：DSH `>= 0.2.1-rc.2`、已登录的 DeepSeek 账号，以及标准的 `llm` / `attachments` / `fs` 服务（随官方 bundle 提供）。
+依赖：DSH `>= 0.2.1-rc.2 < 0.3.0`（已在 **0.2.1-rc.3** 复验，2026-10-24）、已登录的 DeepSeek 账号，以及标准的 `llm` / `attachments` / `fs` 服务（随官方 bundle 提供）。确需在范围外宿主先跑，用插件管理器的**精确版本豁免**（profile 的 `compatibility.json`），不要改版本范围。
 
 ### 使用
 
