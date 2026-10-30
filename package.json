@@ -1,6 +1,6 @@
 {
   "name": "@caesarloo/dsh-deepseek-account-vision",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Give any main model DeepSeek-account vision in DeepSeek Harness: recognize images with DeepSeek-V4.1-Flash (deepseek-flash, 1017) through a deepseek_vision tool, and auto-transcribe attached images for any provider route. No API key.",
   "private": false,
   "type": "module",

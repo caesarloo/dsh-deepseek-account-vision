@@ -79,10 +79,11 @@ export function createFakeInnerAdapter({ model = { id: 'deepseek-v4-pro', name: 
         }),
         stream: async function* (options) {
             delegated.push(options);
+            yield { type: 'text-delta', text: '主模型基于转译回答' };
             yield { type: 'finish', reason: { kind: 'stop' } };
         },
     };
-    return { adapter, delegated };
+    return { adapter, delegated, model };
 }
 
 /**
@@ -105,17 +106,17 @@ export function createFakeContext(options = {}) {
         for (const listener of listeners.get(event) ?? []) listener();
     };
 
+    const innerProviderId = options.innerProviderId ?? 'deepseek-account';
+    const visionModel = options.visionModel ?? 'deepseek-flash';
     const llm = {
         listProviders: () => providers.map((provider) => ({ ...provider })),
-        registration: (provider) => {
-            const found = providers.find((entry) => entry.id === provider);
-            if (found === undefined) {
-                const error = new Error(`no adapter registered for provider "${provider}"`);
-                error.code = 'NO_ADAPTER';
-                throw error;
-            }
-            return { adapter: inner.adapter, provider: found };
-        },
+        // 公开面：与宿主 dsh-llm 的 LlmRuntime 同名方法一一对应。插件只用这些，
+        // 私有的 registration（宿主声明为 private）既不 mock、也不被依赖。
+        providerRetryPolicy: (_provider) => ({ maxAttempts: 1 }),
+        imageRequestPricing: (_provider, _model) => undefined,
+        imageRequestTarget: (_provider, _model, image) => ({ width: image.width, height: image.height, maxBytes: image.bytes }),
+        listModels: async (_provider) => [{ id: inner.model.id, name: inner.model.name, provider: innerProviderId }],
+        resolveModelInfo: async (provider, id) => ({ ...inner.model, provider, id, name: inner.model.name }),
         registerAdapter: (ids, adapter) => {
             for (const id of ids) {
                 registeredAdapters.set(id, adapter);
@@ -125,6 +126,11 @@ export function createFakeContext(options = {}) {
             return () => {};
         },
         stream: (request) => {
+            // 宿主的公开 stream 按 provider 路由。识图请求与「转译后委托原模型」的
+            // provider 相同（都是 innerProvider），用 model 区分两者。
+            if (request.provider === innerProviderId && request.model !== visionModel) {
+                return inner.adapter.stream(request);
+            }
             llmRequests.push(request);
             if (options.stream !== undefined) return options.stream(request);
             const text = options.visionText ?? '识图结果：一张 1x1 的透明 PNG。';

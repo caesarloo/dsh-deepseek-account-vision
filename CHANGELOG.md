@@ -2,6 +2,23 @@
 
 本项目的所有重要改动都记录在这里。版本号遵循语义化版本（主.次.修）。
 
+## [0.1.2] - 2026-10-30
+
+**自动转译路由改用宿主公开接口；DSH 0.2.1-rc.5 复验**
+
+- `lib/route.js` 的委托链不再读 `ctx.llm.registration(...)`（宿主 `LlmRuntime` 把它声明为
+  `private` 的运行时句柄）。改为 `ctx.llm` 的公开 API：`providerRetryPolicy` /
+  `imageRequestPricing` / `imageRequestTarget` / `listModels` / `resolveModelInfo` / `stream`。
+  行为等价；变化在于宿主收紧内部实现时，不会再把所有 `<provider>-vision` 路由静默注册失败
+  （旧实现下失败只留一条 warn，用户看到的是"贴图后没有转译"）。
+- `prepareCall` 不再借用 inner adapter 的 `prepareCall`（同属 adapter 私有面）：改为公开的
+  `resolveModelInfo` + 本适配器 `stream` 内用 `ctx.llm.stream({ provider: innerProvider, ... })`
+  委托，代价是每次委托多一次 inner 路由解析。
+- 测试同步：`tests/fake-context.js` 不再 mock 私有 `registration`，改为 mock 上述公开方法；
+  29 个单测全绿。
+- 在 DSH **0.2.1-rc.5** 桌面端复验（2026-10-30）：`deepseek_vision` 工具与 `-vision` 路由正常；
+  0.2.1-rc.3 → rc.5 之间插件契约面逐字节零变化。
+
 ## [0.1.1] - 2026-10-24
 
 **DSH 0.2.1-rc.3 复验与版本范围收口**

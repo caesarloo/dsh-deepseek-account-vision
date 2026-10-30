@@ -26,7 +26,7 @@ From a local checkout, install by directory instead: `dsh plugin --profile <prof
 
 Restart DSH once (bundle layers have no hot reload), then verify that `deepseek_vision` appears in the tool list of a new session. A patch-layer development install (`- insert:` with the plugin entry file) reloads hot without a restart.
 
-Requirements: DSH `>= 0.2.1-rc.2 < 0.3.0` (verified on **0.2.1-rc.3**, 2026-10-24), a signed-in DeepSeek account, and the standard `llm` / `attachments` / `fs` services (all present in the shipped bundle). If you must run an out-of-range host, use the plugin manager's **exact-version exemption** (the profile's `compatibility.json`) instead of editing this range.
+Requirements: DSH `>= 0.2.1-rc.2 < 0.3.0` (verified on **0.2.1-rc.5**, 2026-10-30), a signed-in DeepSeek account, and the standard `llm` / `attachments` / `fs` services (all present in the shipped bundle). If you must run an out-of-range host, use the plugin manager's **exact-version exemption** (the profile's `compatibility.json`) instead of editing this range.
 
 ### Usage
 
@@ -93,6 +93,7 @@ Defaults ship in `cordis.patch.yml`; override them in your profile's `cordis.pat
 ### Dependencies
 
 - **No API key, no separate VLM account.** Recognition goes through `ctx.llm.stream()` on the DeepSeek account route; DSH's account service owns the credentials.
+- **Public host surface only.** The auto-transcribe route delegates through `ctx.llm`'s public API (`providerRetryPolicy` / `imageRequestPricing` / `imageRequestTarget` / `listModels` / `resolveModelInfo` / `stream`). It no longer reads the runtime's private `registration` handle, so a host that tightens that internals cannot silently disable every `<provider>-vision` route.
 - **No image library.** Attachment normalization (size, pixels, format validation) is done by DSH's attachment service; the plugin only ships `schemastery` for config.
 - **Node built-ins only** beyond that (`crypto`, `path`, global `fetch` / `AbortSignal`).
 
@@ -146,7 +147,7 @@ dsh plugin --profile <profile> add @caesarloo/dsh-deepseek-account-vision
 
 安装后重启一次 DSH（bundle 层不支持热重载），再在新会话的工具列表里确认出现 `deepseek_vision`。开发期也可以用 patch 层 `- insert:` 指向插件入口文件装载，改完热生效、无需重启。
 
-依赖：DSH `>= 0.2.1-rc.2 < 0.3.0`（已在 **0.2.1-rc.3** 复验，2026-10-24）、已登录的 DeepSeek 账号，以及标准的 `llm` / `attachments` / `fs` 服务（随官方 bundle 提供）。确需在范围外宿主先跑，用插件管理器的**精确版本豁免**（profile 的 `compatibility.json`），不要改版本范围。
+依赖：DSH `>= 0.2.1-rc.2 < 0.3.0`（已在 **0.2.1-rc.5** 复验，2026-10-30）、已登录的 DeepSeek 账号，以及标准的 `llm` / `attachments` / `fs` 服务（随官方 bundle 提供）。确需在范围外宿主先跑，用插件管理器的**精确版本豁免**（profile 的 `compatibility.json`），不要改版本范围。
 
 ### 使用
 
@@ -213,6 +214,7 @@ GUI 图片 ──▶ <provider>-vision 路由（声明支持图片 → 附件放
 ### 依赖约定
 
 - **无 API Key、无独立视觉账号**：识图经 `ctx.llm.stream()` 打在 DeepSeek 账号路由上，凭据由 DSH 账号服务持有。
+- **只用宿主公开接口**：自动转译路由的委托链走 `ctx.llm` 公开 API（`providerRetryPolicy` / `imageRequestPricing` / `imageRequestTarget` / `listModels` / `resolveModelInfo` / `stream`），不再读取运行时私有的 `registration` 句柄——宿主收紧内部实现时，不会再把所有 `<provider>-vision` 路由静默关掉。
 - **无图像库**：尺寸/像素/格式归一化由 DSH 附件服务完成；插件自身只依赖 `schemastery` 做配置校验。
 - 其余只用 Node 内建能力（`crypto`、`path`、全局 `fetch` / `AbortSignal`）。
 
